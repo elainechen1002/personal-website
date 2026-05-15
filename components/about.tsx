@@ -32,14 +32,14 @@ export function About() {
       {/* ABOUT */}
       <section
         id="about"
-        className="min-h-screen overflow-hidden bg-[#f8d0d0] px-6 pb-24 pt-28 text-[#3b2626]"
+        className="min-h-screen overflow-hidden bg-[#f8d0d0] px-6 pb-12 pt-20 text-[#3b2626]"
       >
         <div className="mx-auto max-w-6xl">
-          <div className="grid items-center gap-14 md:grid-cols-5">
+          <div className="grid items-center gap-10 md:grid-cols-5">
             
             {/* PHOTOS */}
             <div className="relative md:col-span-2">
-              <div className="mb-6 flex items-center gap-4">
+              <div className="mb-4 flex items-center gap-4">
                 <div className="h-px w-10 bg-[#8b5b5b]" />
                 <p className="text-xs uppercase tracking-[0.35em] text-[#8b5b5b]">
                   about
@@ -99,11 +99,11 @@ export function About() {
                   Elaine Chen
                 </p>
 
-                <p className="mb-10 text-sm uppercase tracking-[0.45em] text-[#8b5b5b]">
+                <p className="mb-8 text-sm uppercase tracking-[0.45em] text-[#8b5b5b]">
                   陈依林
                 </p>
 
-                <div className="space-y-5 text-[1rem] leading-relaxed text-[#6f4b4b]">
+                <div className="space-y-4 text-[1rem] leading-relaxed text-[#6f4b4b]">
                   <p>
                     hi! i'm a designer, artist, and incoming mechanical engineering
                     student at the University of Waterloo.
@@ -128,17 +128,17 @@ export function About() {
       {/* EXPERIENCE */}
       <section
         id="experience"
-        className="bg-[#f8d0d0] px-6 py-28 text-[#3b2626]"
+        className="bg-[#f8d0d0] px-6 py-16 text-[#3b2626]"
       >
         <div className="mx-auto max-w-6xl">
-          <div className="mb-16 flex items-center gap-4">
+          <div className="mb-10 flex items-center gap-4">
             <div className="h-px w-10 bg-[#8b5b5b]" />
             <p className="text-xs uppercase tracking-[0.35em] text-[#8b5b5b]">
               projects
             </p>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-8">
             {experiences.map((exp, index) => (
               <ScrollReveal key={index}>
                 <div className="group rounded-[2rem] border border-white/60 bg-white/55 p-8 shadow-[0_20px_60px_rgba(90,45,45,0.12)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(90,45,45,0.18)] md:p-10">
@@ -187,13 +187,13 @@ export function About() {
       {/* CONTACT */}
       <section
         id="contact"
-        className="bg-[#f8d0d0] px-6 py-32 text-[#3b2626]"
+        className="bg-[#f8d0d0] px-6 py-16 text-[#3b2626]"
       >
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
             <div className="rounded-[2.5rem] border border-white/60 bg-[#fff7f2]/65 p-10 shadow-[0_25px_80px_rgba(90,45,45,0.14)] backdrop-blur-2xl md:p-16">
               
-              <div className="mb-10">
+              <div className="mb-8">
                 <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#8b5b5b]">
                   contact
                 </p>
@@ -203,7 +203,7 @@ export function About() {
                 </h2>
               </div>
 
-              <div className="grid gap-12 md:grid-cols-2">
+              <div className="grid gap-10 md:grid-cols-2">
                 
                 <div>
                   <p className="max-w-sm leading-relaxed text-[#6f4b4b]">
@@ -256,12 +256,13 @@ export function About() {
           </ScrollReveal>
         </div>
       </section>
+
       <Footer
-                background="bg-[#f8d0d0]"
-                border="border-[#e7d8ca]"
-                text="text-[#7a6254]"
-                hover="hover:text-[#3f3128]"
-              />
+        background="bg-[#f8d0d0]"
+        border="border-[#e7d8ca]"
+        text="text-[#7a6254]"
+        hover="hover:text-[#3f3128]"
+      />
     </>
   )
 }
