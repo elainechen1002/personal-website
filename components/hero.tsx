@@ -6,15 +6,30 @@ import HanziWriter from "hanzi-writer"
 export function Hero() {
   const charRefs = useRef<(HTMLDivElement | null)[]>([])
   const hasAnimated = useRef(false)
+
+  const [showHero, setShowHero] = useState(false)
   const [showMajor, setShowMajor] = useState(false)
+  const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
+    const alreadyPlayed = sessionStorage.getItem("heroPlayed")
+
+    if (alreadyPlayed) {
+      window.dispatchEvent(new Event("heroAnimationDone"))
+      return
+    }
+
+    setShowHero(true)
+  }, [])
+
+  useEffect(() => {
+    if (!showHero) return
     if (hasAnimated.current) return
     hasAnimated.current = true
 
     const chars = ["陈", "依", "林"]
-
     const originalOverflow = document.body.style.overflow
+
     document.body.style.overflow = "hidden"
 
     async function animateChars() {
@@ -44,8 +59,7 @@ export function Hero() {
       setShowMajor(true)
 
       setTimeout(() => {
-        document.body.style.overflow = originalOverflow
-        window.dispatchEvent(new Event("heroAnimationDone"))
+        setShowButton(true)
       }, 900)
     }
 
@@ -54,12 +68,28 @@ export function Hero() {
     return () => {
       document.body.style.overflow = originalOverflow
     }
-  }, [])
+  }, [showHero])
+
+  const handleSeeMore = () => {
+    sessionStorage.setItem("heroPlayed", "true")
+    document.body.style.overflow = ""
+    window.dispatchEvent(new Event("heroAnimationDone"))
+    setShowHero(false)
+
+    setTimeout(() => {
+      document.getElementById("about")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }, 50)
+  }
+
+  if (!showHero) return null
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] sm:px-6"
+      className="fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] sm:px-6"
     >
       <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[22vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.12] scale-y-[1.45] -translate-x-1/2 -translate-y-1/2 md:text-[18vw]">
         Elaine Chen
@@ -87,6 +117,17 @@ export function Hero() {
         >
           Mechanical Engineering @ University of Waterloo
         </p>
+
+        <button
+          onClick={handleSeeMore}
+          className={`rounded-full border border-[#3b2626]/20 bg-white/45 px-7 py-3 text-xs uppercase tracking-[0.25em] text-[#3b2626] shadow-[0_15px_40px_rgba(90,45,45,0.12)] backdrop-blur transition-all duration-700 hover:-translate-y-1 hover:bg-white/70 ${
+            showButton
+              ? "translate-y-0 opacity-100"
+              : "pointer-events-none translate-y-4 opacity-0"
+          }`}
+        >
+          See More
+        </button>
       </div>
     </section>
   )
