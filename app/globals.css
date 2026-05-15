@@ -1,0 +1,326 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f8d0d0;
+  --foreground: oklch(0.25 0.02 350);
+  --card: oklch(0.99 0.005 350);
+  --card-foreground: oklch(0.25 0.02 350);
+  --popover: oklch(0.99 0.005 350);
+  --popover-foreground: oklch(0.25 0.02 350);
+  --primary: oklch(0.65 0.15 350);
+  --primary-foreground: oklch(0.99 0.005 350);
+  --secondary: oklch(0.93 0.02 350);
+  --secondary-foreground: oklch(0.25 0.02 350);
+  --muted: oklch(0.93 0.02 350);
+  --muted-foreground: oklch(0.45 0.02 350);
+  --accent: oklch(0.65 0.15 350);
+  --accent-foreground: oklch(0.99 0.005 350);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.03 350);
+  --input: oklch(0.93 0.02 350);
+  --ring: oklch(0.65 0.15 350);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #f8d0d0;
+  --foreground: oklch(0.25 0.02 350);
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: var(--radius);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+/* =========================================================
+   PAGE LOAD
+========================================================= */
+
+@keyframes page-load {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.page-load {
+  animation: page-load 0.5s ease-out both;
+}
+
+/* =========================================================
+   FLOATING BLOBS
+========================================================= */
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+/* =========================================================
+   INSTAX FLASH
+========================================================= */
+
+.flash-burst {
+  opacity: 0;
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.95) 0%,
+    rgba(255,255,255,0.6) 35%,
+    rgba(255,255,255,0) 75%
+  );
+
+  filter: blur(18px);
+
+  animation: flashBurst 1.1s ease-out forwards;
+  animation-delay: 2s;
+}
+
+@keyframes flashBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scale(2.4);
+  }
+
+  40% {
+    opacity: 0.45;
+    transform: scale(3.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(3.6);
+  }
+}
+
+@keyframes flashDot {
+  0%,
+  16%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+    box-shadow: none;
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1.4);
+    box-shadow:
+      0 0 45px 25px rgba(255, 255, 255, 0.95),
+      0 0 100px 55px rgba(255, 255, 255, 0.55);
+  }
+
+  26% {
+    opacity: 0.5;
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+/* =========================================================
+   POLAROID DISPENSE
+========================================================= */
+
+@keyframes dispensePolaroid {
+  0%,
+  25% {
+    opacity: 0;
+    transform: translate(-50%, 95px);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translate(-50%, 95px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -180px);
+  }
+}
+
+/* =========================================================
+   PHOTO DEVELOPING
+========================================================= */
+
+@keyframes developPhoto {
+  0%,
+  42% {
+    filter: brightness(0);
+    opacity: 1;
+  }
+
+  62% {
+    filter: brightness(0.35) saturate(0.4);
+    opacity: 1;
+  }
+
+  82%,
+  100% {
+    filter: brightness(1) saturate(1);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   MUSIC NOTES
+========================================================= */
+
+@keyframes note1 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-80px, -100px) scale(1.4) rotate(25deg); }
+}
+
+@keyframes note2 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-30px, -140px) scale(1.4) rotate(-20deg); }
+}
+
+@keyframes note3 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(50px, -120px) scale(1.4) rotate(20deg); }
+}
+
+@keyframes note4 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(90px, -80px) scale(1.4) rotate(-25deg); }
+}
+
+@keyframes note5 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(10px, -160px) scale(1.4) rotate(18deg); }
+}
+
+@keyframes note6 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-60px, -60px) scale(1.4) rotate(-18deg); }
+}
+
+@keyframes note7 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(120px,-140px) scale(1.5) rotate(18deg); }
+}
+
+@keyframes note8 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-120px,-120px) scale(1.4) rotate(-22deg); }
+}
+
+@keyframes note9 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(40px,-190px) scale(1.6) rotate(20deg); }
+}
+
+@keyframes note10 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-30px,-210px) scale(1.5) rotate(-20deg); }
+}
+
+@keyframes note11 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(150px,-80px) scale(1.4) rotate(25deg); }
+}
+
+@keyframes note12 {
+  0% { opacity: 0; transform: translate(0,0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-150px,-60px) scale(1.4) rotate(-25deg); }
+}
+
+/* =========================================================
+   HIDE SCROLLBAR
+========================================================= */
+
+html,
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}

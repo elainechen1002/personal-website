@@ -1,0 +1,7 @@
+node_modules
+.next
+.vercel
+*.log
+*.zip
+components/oracleJdk-26
+*.jmod
