@@ -128,7 +128,7 @@ export function About() {
       {/* EXPERIENCE */}
       <section
         id="experience"
-        className="bg-[#f8d0d0] px-6 pt-0 pb-14 text-[#3b2626]"
+        className="bg-[#f8d0d0] px-6 pt-10 md:pt-0 pb-14 text-[#3b2626]"
       >
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 flex items-center gap-4">
