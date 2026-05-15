@@ -32,7 +32,7 @@ export function About() {
       {/* ABOUT */}
       <section
         id="about"
-        className="min-h-screen overflow-hidden bg-[#f8d0d0] px-6 pb-12 pt-20 text-[#3b2626]"
+        className="min-h-screen overflow-hidden bg-[#f8d0d0] px-6 pb-4 pt-16 text-[#3b2626]"
       >
         <div className="mx-auto max-w-6xl">
           <div className="grid items-center gap-10 md:grid-cols-5">
@@ -128,7 +128,7 @@ export function About() {
       {/* EXPERIENCE */}
       <section
         id="experience"
-        className="bg-[#f8d0d0] px-6 py-16 text-[#3b2626]"
+        className="bg-[#f8d0d0] px-6 py-8 text-[#3b2626]"
       >
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 flex items-center gap-4">
@@ -187,7 +187,7 @@ export function About() {
       {/* CONTACT */}
       <section
         id="contact"
-        className="bg-[#f8d0d0] px-6 py-16 text-[#3b2626]"
+        className="bg-[#f8d0d0] px-6 py-8 text-[#3b2626]"
       >
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
