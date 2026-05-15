@@ -36,6 +36,7 @@ export default function RootLayout({
         <SiteShell>{children}</SiteShell>
 
         {process.env.NODE_ENV === "production" && <Analytics />}
+        <Analytics />
       </body>
     </html>
   )
