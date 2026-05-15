@@ -15,25 +15,11 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Elaine Chen - Personal Website",
-  description:
-    "Welcome to my personal website. Learn more about who I am, what I do, and how to get in touch.",
+  title: "Elaine Chen",
+  description: "A peek into my life.",
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/snoopy.png",
+    apple: "/snoopy.png",
   },
 }
 
