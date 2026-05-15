@@ -25,10 +25,10 @@ export function Hero() {
   useEffect(() => {
     if (!showHero) return
     if (hasAnimated.current) return
+
     hasAnimated.current = true
 
     const chars = ["陈", "依", "林"]
-    const originalOverflow = document.body.style.overflow
 
     document.body.style.overflow = "hidden"
 
@@ -66,22 +66,15 @@ export function Hero() {
     animateChars()
 
     return () => {
-      document.body.style.overflow = originalOverflow
+      document.body.style.overflow = "auto"
     }
   }, [showHero])
 
   const handleSeeMore = () => {
     sessionStorage.setItem("heroPlayed", "true")
-    document.body.style.overflow = ""
+    document.body.style.overflow = "auto"
     window.dispatchEvent(new Event("heroAnimationDone"))
     setShowHero(false)
-
-    setTimeout(() => {
-      document.getElementById("about")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    }, 50)
   }
 
   if (!showHero) return null
@@ -89,7 +82,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] sm:px-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] sm:px-6"
     >
       <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[22vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.12] scale-y-[1.45] -translate-x-1/2 -translate-y-1/2 md:text-[18vw]">
         Elaine Chen
