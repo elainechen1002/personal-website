@@ -7,30 +7,34 @@ export function Hero() {
   const charRefs = useRef<(HTMLDivElement | null)[]>([])
   const hasAnimated = useRef(false)
 
-  const [showHero, setShowHero] = useState(false)
+  const [showHero, setShowHero] = useState(true)
   const [showMajor, setShowMajor] = useState(false)
   const [showButton, setShowButton] = useState(false)
+  const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    const alreadyPlayed = sessionStorage.getItem("heroPlayed")
+    const shouldSkipHero = sessionStorage.getItem("skipHero")
 
-    if (alreadyPlayed) {
+    if (shouldSkipHero === "true") {
+      sessionStorage.removeItem("skipHero")
+      setShowHero(false)
+
+      document.documentElement.style.overflow = "auto"
+      document.body.style.overflow = "auto"
+
       window.dispatchEvent(new Event("heroAnimationDone"))
       return
     }
 
-    setShowHero(true)
-  }, [])
-
-  useEffect(() => {
-    if (!showHero) return
     if (hasAnimated.current) return
-
     hasAnimated.current = true
 
-    const chars = ["陈", "依", "林"]
+    window.scrollTo(0, 0)
 
+    document.documentElement.style.overflow = "hidden"
     document.body.style.overflow = "hidden"
+
+    const chars = ["陈", "依", "林"]
 
     async function animateChars() {
       await new Promise((resolve) => setTimeout(resolve, 500))
@@ -66,15 +70,22 @@ export function Hero() {
     animateChars()
 
     return () => {
+      document.documentElement.style.overflow = "auto"
       document.body.style.overflow = "auto"
     }
-  }, [showHero])
+  }, [])
 
   const handleSeeMore = () => {
-    sessionStorage.setItem("heroPlayed", "true")
-    document.body.style.overflow = "auto"
-    window.dispatchEvent(new Event("heroAnimationDone"))
-    setShowHero(false)
+    setFadeOut(true)
+
+    setTimeout(() => {
+      document.documentElement.style.overflow = "auto"
+      document.body.style.overflow = "auto"
+
+      window.dispatchEvent(new Event("heroAnimationDone"))
+
+      setShowHero(false)
+    }, 800)
   }
 
   if (!showHero) return null
@@ -82,9 +93,11 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] sm:px-6"
+      className={`fixed left-0 top-0 z-[999999] flex h-screen w-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] transition-opacity duration-700 sm:px-6 ${
+        fadeOut ? "opacity-0" : "opacity-100"
+      }`}
     >
-      <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[22vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.12] scale-y-[1.45] -translate-x-1/2 -translate-y-1/2 md:text-[18vw]">
+      <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[18vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.12] scale-y-[1.3] -translate-x-1/2 -translate-y-1/2 md:text-[15vw]">
         Elaine Chen
       </h1>
 
