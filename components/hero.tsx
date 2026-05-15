@@ -93,7 +93,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className={`fixed left-0 top-0 z-[999999] flex h-screen w-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] transition-opacity duration-700 sm:px-6 ${
+      className={`fixed inset-0 z-[999999] flex h-[100svh] min-h-[100svh] w-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] transition-opacity duration-700 sm:h-screen sm:min-h-screen sm:px-6 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
