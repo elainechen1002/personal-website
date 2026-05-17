@@ -13,15 +13,12 @@ export function Hero() {
   const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    const shouldSkipHero = sessionStorage.getItem("skipHero")
+    const heroPlayed = sessionStorage.getItem("heroPlayed")
 
-    if (shouldSkipHero === "true") {
-      sessionStorage.removeItem("skipHero")
+    if (heroPlayed === "true") {
       setShowHero(false)
-
       document.documentElement.style.overflow = "auto"
       document.body.style.overflow = "auto"
-
       window.dispatchEvent(new Event("heroAnimationDone"))
       return
     }
@@ -30,7 +27,6 @@ export function Hero() {
     hasAnimated.current = true
 
     window.scrollTo(0, 0)
-
     document.documentElement.style.overflow = "hidden"
     document.body.style.overflow = "hidden"
 
@@ -61,10 +57,7 @@ export function Hero() {
       }
 
       setShowMajor(true)
-
-      setTimeout(() => {
-        setShowButton(true)
-      }, 900)
+      setTimeout(() => setShowButton(true), 900)
     }
 
     animateChars()
@@ -76,14 +69,13 @@ export function Hero() {
   }, [])
 
   const handleSeeMore = () => {
+    sessionStorage.setItem("heroPlayed", "true")
     setFadeOut(true)
 
     setTimeout(() => {
       document.documentElement.style.overflow = "auto"
       document.body.style.overflow = "auto"
-
       window.dispatchEvent(new Event("heroAnimationDone"))
-
       setShowHero(false)
     }, 800)
   }
@@ -93,11 +85,11 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className={`fixed inset-0 z-[999999] flex h-[100svh] min-h-[100svh] w-screen items-center justify-center overflow-hidden bg-[#f8d0d0] px-4 text-center text-[#3b2626] transition-opacity duration-700 sm:h-screen sm:min-h-screen sm:px-6 ${
+      className={`fixed inset-0 z-[999999] flex h-[100svh] min-h-[100svh] w-screen items-center justify-center overflow-hidden bg-[#f6ebe7] px-4 text-center text-[#3b2626] transition-opacity duration-700 sm:h-screen sm:min-h-screen sm:px-6 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
-      <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[18vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.12] scale-y-[1.3] -translate-x-1/2 -translate-y-1/2 md:text-[15vw]">
+      <h1 className="pointer-events-none absolute left-1/2 top-1/2 select-none whitespace-nowrap text-[18vw] font-semibold leading-none tracking-[-0.12em] text-[#3b2626]/[0.10] scale-y-[1.3] -translate-x-1/2 -translate-y-1/2 md:text-[15vw]">
         Elaine Chen
       </h1>
 
@@ -126,7 +118,7 @@ export function Hero() {
 
         <button
           onClick={handleSeeMore}
-          className={`rounded-full border border-[#3b2626]/20 bg-white/45 px-7 py-3 text-xs uppercase tracking-[0.25em] text-[#3b2626] shadow-[0_15px_40px_rgba(90,45,45,0.12)] backdrop-blur transition-all duration-700 hover:-translate-y-1 hover:bg-white/70 ${
+          className={`border-b border-[#3b2626]/35 pb-1 text-xs uppercase tracking-[0.25em] text-[#3b2626] transition-all duration-700 hover:border-[#3b2626] ${
             showButton
               ? "translate-y-0 opacity-100"
               : "pointer-events-none translate-y-4 opacity-0"

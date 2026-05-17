@@ -1,30 +1,27 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
 
-export function PageTransition({ children }: { children: React.ReactNode }) {
+export default function PageTransition({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const pathname = usePathname()
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    setVisible(false)
-
-    const timeout = setTimeout(() => {
-      setVisible(true)
-    }, 50)
-
-    return () => clearTimeout(timeout)
-  }, [pathname])
 
   return (
-    <div
+    <motion.div
       key={pathname}
-      className={`transition-all duration-700 ease-in-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      }`}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{
+        duration: 0.45,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }

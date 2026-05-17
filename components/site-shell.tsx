@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { PageTransition } from "@/components/page-transition"
+import  PageTransition  from "@/components/page-transition"
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (

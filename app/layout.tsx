@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { SiteShell } from "@/components/site-shell"
+import  PageTransition from "@/components/page-transition"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -33,9 +34,10 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} font-sans antialiased flex flex-col min-h-screen`}
       >
-        <SiteShell>{children}</SiteShell>
+        <SiteShell>
+          <PageTransition>{children}</PageTransition>
+        </SiteShell>
 
-        {process.env.NODE_ENV === "production" && <Analytics />}
         <Analytics />
       </body>
     </html>

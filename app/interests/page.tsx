@@ -1,287 +1,265 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { createPortal } from "react-dom"
-import { X } from "lucide-react"
+import { useState } from "react"
 import { Footer } from "@/components/footer"
-import { InstaxCamera } from "@/components/instax-camera"
 
 const posts = [
   {
     image: "https://i.postimg.cc/qqRyF0hb/IMG-7460.jpg",
     title: "snow days",
-    description:
-      "Snowboarding has been my favourite sport since I picked it up. The adrenaline that rushes through me as I glide down the mountain is like no other feeling.",
+    description: "Snowboarding, cold air, and mountain adrenaline.",
+    movieCover:
+      "https://static1.colliderimages.com/wordpress/wp-content/uploads/sharedimages/2024/04/the-outsiders-movie-poster.jpg",
+    movieTitle: "The Outsiders",
   },
   {
     image: "https://i.postimg.cc/TwybxxJY/IMG-7276.jpg",
     title: "old sketchbook",
-    description:
-      "A personal favourite out of the hundreds of pieces I've created throughout my childhood.",
+    description: "Years of drawing, sketching, and unfinished ideas.",
+    movieCover:
+      "https://static1.colliderimages.com/wordpress/wp-content/uploads/sharedimages/2024/04/dead-poets-society-poster.jpg",
+    movieTitle: "Dead Poets Society",
   },
   {
     image: "https://i.postimg.cc/HkxsR2tf/IMG-4166.jpg",
     title: "nail sets",
-    description:
-      "One of my many sets. Follow my nail account on insta: @haybennails",
+    description: "Tiny details, colour palettes, and wearable art.",
+    movieCover:
+      "https://tse2.mm.bing.net/th/id/OIP.uGHHTy-qyf-9yujlIICNDQHaLH?rs=1&pid=ImgDetMain&o=7&rm=3",
+    movieTitle: "10 Things I Hate About You",
   },
   {
     image: "https://i.postimg.cc/rsNwXZ3L/IMG-1603.jpg",
     title: "museum days",
-    description:
-      "Fell in love with the surreal vibes of Monet's impressionism.",
+    description: "Soft rooms, quiet looking, and Monet colours.",
+    movieCover:
+      "https://xl.movieposterdb.com/14_08/2011/1605783/xl_1605783_d650a75e.jpg",
+    movieTitle: "Midnight in Paris",
   },
   {
     image: "https://i.postimg.cc/4dR4STy9/IMG-3303.jpg",
     title: "city memories",
-    description: "Travelling, exploring cities, and collecting memories.",
+    description: "Travelling, exploring cities, and collecting moments.",
+    movieCover:
+      "https://static1.srcdn.com/wordpress/wp-content/uploads/2020/04/Good-Will-Hunting-Movie-Poster.jpg",
+    movieTitle: "Good Will Hunting",
   },
   {
     image: "https://i.postimg.cc/pL92Vdnn/IMG-6447.jpg",
     title: "foodie moments",
-    description:
-      "I'm a big foodie and you'll catch me eating at every new restaurant.",
+    description: "New restaurants, comfort meals, and little treats.",
+    movieCover:
+      "https://m.media-amazon.com/images/M/MV5BMTU1MTQ0NDAyNV5BMl5BanBnXkFtZTgwNjQ4MjE4MjI@._V1_.jpg",
+    movieTitle: "To the Bone",
   },
   {
     image: "https://i.postimg.cc/C5K3vvGv/IMG-7011.jpg",
     title: "water mornings",
-    description:
-      "The sounds of the water, quiet mornings, and a loud speaker tied to my paddleboard.",
+    description: "Paddleboards, speakers, and slow summer mornings.",
+    movieCover:
+      "https://media.services.cinergy.ch/media/box1600/eb45ca82de9170e6cfdbea680c873d33da42ac6e.jpg",
+    movieTitle: "Manchester by the Sea",
   },
   {
     image: "https://i.postimg.cc/VLFd35P3/0006028.jpg",
     title: "through my camera",
-    description: "Capturing the beauty of nature on my camera.",
+    description: "Nature, light, and scenes worth keeping.",
+    movieCover:
+      "https://www.themoviedb.org/t/p/original/wbvboxr6xmdSbMEBKzXVWgAwJ1Q.jpg",
+    movieTitle: "The Notebook",
   },
 ]
 
-const rotations = [
-  "-rotate-2",
-  "rotate-1",
-  "rotate-2",
-  "-rotate-1",
-  "rotate-[1.5deg]",
-  "-rotate-[1.5deg]",
-  "rotate-[0.5deg]",
-  "-rotate-[0.5deg]",
-]
-
 export default function Page() {
-  const [selectedPost, setSelectedPost] = useState<(typeof posts)[0] | null>(
-    null
-  )
-  const [mounted, setMounted] = useState(false)
+  const [entered, setEntered] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
+  const [flippedCards, setFlippedCards] = useState<number[]>([])
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const enterArchive = () => {
+    setEntered(true)
 
-  useEffect(() => {
-    if (!selectedPost) return
+    setTimeout(() => {
+      setShowIntro(false)
+    }, 700)
+  }
 
-    const originalOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-
-    return () => {
-      document.body.style.overflow = originalOverflow
-    }
-  }, [selectedPost])
+  const toggleFlip = (index: number) => {
+    setFlippedCards((current) =>
+      current.includes(index)
+        ? current.filter((card) => card !== index)
+        : [...current, index]
+    )
+  }
 
   return (
     <>
-      <main className="relative min-h-screen overflow-hidden bg-[#f8d0d0] text-[#3b2626]">
-        {/* SOFT BACKGROUND */}
-        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          <div className="soft-blob soft-blob-1" />
-          <div className="soft-blob soft-blob-2" />
-          <div className="soft-blob soft-blob-3" />
-        </div>
-
-        {/* INTRO */}
-        <section className="relative z-10 flex min-h-[82vh] items-center justify-center px-6 pb-10 pt-28">
-          <div className="relative w-full max-w-5xl overflow-hidden rounded-[2.5rem] border border-white/60 bg-[#fff7f2]/70 px-8 py-10 shadow-[0_25px_80px_rgba(90,45,45,0.13)] backdrop-blur-2xl md:px-12 md:py-12">
-            <div className="grid items-center gap-10 md:grid-cols-[1fr_0.85fr]">
-              <div className="text-center md:text-left">
-                <p className="mx-auto mb-5 w-fit rounded-full border border-[#3b2626]/10 bg-white/60 px-4 py-1 text-xs uppercase tracking-[0.35em] text-[#8b5b5b] md:mx-0">
-                  interests
-                </p>
-
-                <h1 className="text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-[#3b2626] sm:text-7xl md:text-8xl">
-                  a peek
-                  <br />
-                  into my life
-                </h1>
-
-                <p className="mt-6 max-w-md text-sm leading-7 text-[#6f4b4b] sm:text-base">
-                  little pieces of what i love, collect, create, and remember.
-                </p>
-
-                <div className="mt-8 flex justify-center md:justify-start">
-                  <a
-                    href="#gallery"
-                    className="rounded-full bg-[#3b2626] px-6 py-3 text-sm font-medium text-[#fff7f2] shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-105"
-                  >
-                    look around
-                  </a>
-                </div>
-              </div>
-
-              <div className="relative flex items-center justify-center">
-                <div className="absolute right-8 top-14 hidden rotate-[6deg] rounded-full border border-white/70 bg-white/75 px-5 py-2 text-sm italic text-[#8b5b5b] shadow-md backdrop-blur md:block">
-                  now developing...
-                </div>
-
-                <div className="absolute bottom-8 left-4 hidden rotate-[-8deg] rounded-full border border-white/70 bg-white/75 px-5 py-2 text-sm text-[#8b5b5b] shadow-md backdrop-blur md:block">
-                  saved moments ♡
-                </div>
-
-                <div className="scale-[0.86]">
-                  <InstaxCamera />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* GALLERY */}
+      <main className="min-h-screen bg-[#f6ebe7] text-[#241818]">
         <section
           id="gallery"
-          className="relative z-10 min-h-screen px-4 pb-28 pt-8 sm:px-8"
+          className={`px-6 pt-32 pb-32 transition duration-700 ${
+            showIntro ? "opacity-0" : "opacity-100"
+          }`}
         >
-          <div className="mx-auto mb-14 max-w-6xl text-center">
-            <p className="text-xs uppercase tracking-[0.4em] text-[#8b5b5b]">
-              memories
-            </p>
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-14 flex items-center gap-4">
+              <div className="h-px w-10 bg-[#8b6f68]" />
 
-            <h2 className="mt-4 text-5xl font-semibold tracking-[-0.08em] text-[#3b2626] sm:text-6xl">
-              collected lately
-            </h2>
-          </div>
+              <p className="text-[11px] uppercase tracking-[0.35em] text-[#8b6f68]">
+                archive
+              </p>
+            </div>
 
-          <div className="mx-auto max-w-6xl columns-1 gap-8 sm:columns-2 lg:columns-4">
-            {posts.map((post, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedPost(post)}
-                className={`group reveal-card relative mb-8 flex w-full break-inside-avoid flex-col rounded-[0.8rem] bg-white p-3 pb-12 text-left shadow-[0_18px_45px_rgba(90,45,45,0.16)] transition duration-500 hover:z-20 hover:-translate-y-3 hover:rotate-0 hover:shadow-[0_24px_65px_rgba(90,45,45,0.2)] ${
-                  rotations[index % rotations.length]
-                }`}
-                style={{
-                  animationDelay: `${index * 90}ms`,
-                }}
-              >
-                <div className="overflow-hidden rounded-[0.45rem] bg-[#f8d0d0]/35">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="h-auto w-full object-contain transition duration-700 group-hover:scale-105"
-                  />
-                </div>
+            <div className="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
+              {posts.map((post, index) => {
+                const isFlipped = flippedCards.includes(index)
 
-                <p className="absolute bottom-4 left-4 text-lg font-medium tracking-[-0.04em] text-[#3b2626]">
-                  {post.title}
-                </p>
-              </button>
-            ))}
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => toggleFlip(index)}
+                    className="group h-[430px] cursor-pointer text-left [perspective:1200px]"
+                  >
+                    <div
+                      className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${
+                        isFlipped
+                          ? "[transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)]"
+                          : "[transform:rotateY(0deg)] group-hover:[transform:rotateY(180deg)]"
+                      }`}
+                    >
+                      <div className="absolute inset-0 h-full w-full border border-[#d8c7c2] bg-[#f8eee9] p-3 shadow-sm [backface-visibility:hidden]">
+                        <div className="flex h-full flex-col">
+                          <div className="overflow-hidden">
+                            <img
+                              src={post.image}
+                              alt={post.title}
+                              className="aspect-[3/4] w-full object-cover"
+                            />
+                          </div>
+
+                          <div className="flex flex-1 flex-col justify-between border-t border-[#d8c7c2] pt-4">
+                            <div>
+                              <p className="font-serif text-2xl italic tracking-[-0.03em] text-[#241818]">
+                                {post.title}
+                              </p>
+
+                              <p className="mt-2 text-sm leading-6 text-[#5f4b47]">
+                                {post.description}
+                              </p>
+                            </div>
+
+                            <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#8b6f68]">
+                              hover / click to flip
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="absolute inset-0 h-full w-full border border-[#d8c7c2] bg-[#f8eee9] p-3 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                        <div className="flex h-full flex-col">
+                          <div className="overflow-hidden">
+                            <img
+                              src={post.movieCover}
+                              alt={post.movieTitle}
+                              className="aspect-[3/4] w-full object-cover"
+                            />
+                          </div>
+
+                          <div className="flex flex-1 flex-col justify-between border-t border-[#d8c7c2] pt-4">
+                            <div>
+                              <p className="text-[10px] uppercase tracking-[0.25em] text-[#8b6f68]">
+                                movie rec
+                              </p>
+
+                              <p className="mt-2 font-serif text-2xl italic tracking-[-0.03em] text-[#241818]">
+                                {post.movieTitle}
+                              </p>
+                            </div>
+
+                            <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#8b6f68]">
+                              hover / click to flip
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </section>
 
-        <Footer
-          background="bg-[#f8d0d0]"
-          border="border-white/40"
-          text="text-[#8b5b5b]"
-          hover="hover:text-[#3b2626]"
-        />
+        {!showIntro && (
+          <Footer
+            background="bg-[#f6ebe7]"
+            border="border-[#d8c7c2]"
+            text="text-[#8b6f68]"
+            hover="hover:text-[#241818]"
+          />
+        )}
       </main>
 
-      {/* MODAL */}
-      {mounted &&
-        selectedPost &&
-        createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#3b2626]/45 p-6 backdrop-blur-xl">
-            <button
-              onClick={() => setSelectedPost(null)}
-              className="absolute right-6 top-6 z-30 rounded-full bg-white/90 p-2 text-[#3b2626] shadow-md transition hover:scale-105"
-            >
-              <X size={22} />
-            </button>
+      {showIntro && (
+        <section
+          className={`fixed inset-0 z-40 flex min-h-screen items-start justify-center overflow-y-auto bg-[#f6ebe7] px-6 pt-24 pb-16 text-[#241818] transition-all duration-700 ${
+            entered ? "pointer-events-none opacity-0" : "opacity-100"
+          }`}
+        >
+          <div className="absolute inset-0 opacity-[0.045]">
+            <div
+              className="h-full w-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+                backgroundSize: "42px 42px",
+              }}
+            />
+          </div>
 
-            <div className="flex max-h-[88vh] max-w-[90vw] rotate-[-1deg] flex-col overflow-hidden rounded-[0.9rem] bg-white p-4 shadow-2xl">
-              <img
-                src={selectedPost.image}
-                alt={selectedPost.title}
-                className="max-h-[58vh] max-w-[82vw] object-contain"
-              />
+          <div className="relative mx-auto w-full max-w-6xl border border-[#d8c7c2] bg-[#f8eee9] p-8 md:p-14">
+            <div className="mb-10 flex items-center justify-between border-b border-[#d8c7c2] pb-5">
+              <p className="text-[11px] uppercase tracking-[0.4em] text-[#8b6f68]">
+                personal archive
+              </p>
 
-              <div className="bg-white px-6 pb-6 pt-5 text-center">
-                <p className="text-2xl font-semibold tracking-[-0.05em] text-[#3b2626]">
-                  {selectedPost.title}
+              <p className="text-[11px] uppercase tracking-[0.25em] text-[#8b6f68]">
+                memories × movies
+              </p>
+            </div>
+
+            <div className="grid gap-14 md:grid-cols-[1.2fr_0.8fr]">
+              <div>
+                <p className="mb-5 font-serif text-sm italic text-[#8b6f68]">
+                  edition no. 01
                 </p>
 
-                <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#6f4b4b]">
-                  {selectedPost.description}
+                <h1 className="max-w-4xl font-serif text-6xl leading-[0.9] tracking-[-0.08em] md:text-8xl">
+                  memories as
+                  <br />
+                  movie scenes.
+                </h1>
+              </div>
+
+              <div className="flex flex-col justify-end">
+                <p className="border-l border-[#d8c7c2] pl-6 text-[15px] leading-8 text-[#5f4b47]">
+                  A small archive of personal moments paired with films that
+                  match their mood — like every photo has its own scene,
+                  soundtrack, and story.
                 </p>
+
+                <button
+                  type="button"
+                  onClick={enterArchive}
+                  className="mt-10 w-fit border border-[#241818] px-5 py-3 text-[11px] uppercase tracking-[0.3em] text-[#241818] transition hover:bg-[#241818] hover:text-[#f6ebe7]"
+                >
+                  enter archive
+                </button>
               </div>
             </div>
-          </div>,
-          document.body
-        )}
-
-      <style jsx global>{`
-        .reveal-card {
-          opacity: 0;
-          transform: translateY(35px);
-          animation: revealPolaroid 0.7s ease forwards;
-        }
-
-        .soft-blob {
-          position: absolute;
-          border-radius: 9999px;
-          filter: blur(90px);
-          opacity: 0.32;
-          animation: floatBlob 18s ease-in-out infinite alternate;
-        }
-
-        .soft-blob-1 {
-          top: 10%;
-          left: -8%;
-          width: 340px;
-          height: 340px;
-          background: #ffffff;
-        }
-
-        .soft-blob-2 {
-          top: 38%;
-          right: -12%;
-          width: 420px;
-          height: 420px;
-          background: #f3b8b8;
-        }
-
-        .soft-blob-3 {
-          bottom: -8%;
-          left: 18%;
-          width: 360px;
-          height: 360px;
-          background: #fff7f2;
-        }
-
-        @keyframes floatBlob {
-          from {
-            transform: translate(0, 0) scale(1);
-          }
-          to {
-            transform: translate(55px, -45px) scale(1.1);
-          }
-        }
-
-        @keyframes revealPolaroid {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+          </div>
+        </section>
+      )}
     </>
   )
 }

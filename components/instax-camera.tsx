@@ -1,186 +1,111 @@
-export function InstaxCamera() {
+"use client"
+
+import { useEffect, useState } from "react"
+
+const photos = [
+  "https://i.postimg.cc/qqRyF0hb/IMG-7460.jpg",
+  "https://i.postimg.cc/TwybxxJY/IMG-7276.jpg",
+  "https://i.postimg.cc/HkxsR2tf/IMG-4166.jpg",
+  "https://i.postimg.cc/rsNwXZ3L/IMG-1603.jpg",
+]
+
+export function InstaxArchive() {
+  const [activePhoto, setActivePhoto] = useState(0)
+  const [flash, setFlash] = useState(false)
+  const [dispense, setDispense] = useState(false)
+  const [develop, setDevelop] = useState(false)
+
+  useEffect(() => {
+    playAnimation()
+
+    const interval = setInterval(() => {
+      setActivePhoto((prev) => (prev + 1) % photos.length)
+      playAnimation()
+    }, 7000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  function playAnimation() {
+    setFlash(false)
+    setDispense(false)
+    setDevelop(false)
+
+    setTimeout(() => setFlash(true), 600)
+    setTimeout(() => setFlash(false), 850)
+    setTimeout(() => setDispense(true), 1200)
+    setTimeout(() => setDevelop(true), 3000)
+  }
+
   return (
-    <>
-      <div className="relative mx-auto flex w-full max-w-[430px] justify-center pt-40">
-        <div className="relative h-[330px] w-[300px] sm:h-[370px] sm:w-[340px]">
-          {/* FLASH */}
-          <div className="flash-burst absolute right-4 top-6 z-[60] h-32 w-32 rounded-full bg-white" />
+    <section className="min-h-screen bg-[#f6ebe7] px-6 py-32 text-[#241818]">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-20 flex items-center gap-4">
+          <div className="h-px w-10 bg-[#8b6f68]" />
+          <p className="text-xs uppercase tracking-[0.35em] text-[#8b6f68]">
+            archive
+          </p>
+        </div>
 
-          {/* PHOTO BEHIND CAMERA */}
-          <div className="instax-photo photo-behind absolute left-1/2 top-[18px] z-20 h-52 w-40 rounded-[0.15rem] bg-white p-3">
-            <div className="photo-develop h-32 w-full bg-black" />
-            <div className="mx-auto mt-3 h-2 w-16 rounded-full bg-[#eee2d6]" />
+        <div className="grid gap-20 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+          <div>
+            <h1 className="max-w-xl text-6xl font-light leading-[0.9] tracking-[-0.09em] md:text-8xl">
+              little moments, slowly developed.
+            </h1>
+
+            <p className="mt-10 max-w-md text-[15px] leading-8 text-[#5f4b47]">
+              a small visual archive of places, hobbies, and memories i keep
+              returning to.
+            </p>
           </div>
 
-          {/* PHOTO IN FRONT ONLY ABOVE SLIT */}
-          <div className="pointer-events-none absolute left-0 top-[-260px] z-40 h-[278px] w-full overflow-hidden">
-            <div className="instax-photo photo-front absolute left-1/2 top-[278px] h-52 w-40 rounded-[0.15rem] bg-white p-3">
-              <div className="photo-develop h-32 w-full bg-black" />
-              <div className="mx-auto mt-3 h-2 w-16 rounded-full bg-[#eee2d6]" />
-            </div>
-          </div>
+          <div className="relative flex min-h-[520px] items-center justify-center">
+            {flash && (
+              <div className="pointer-events-none absolute inset-0 z-40 bg-[#fffaf5] opacity-80" />
+            )}
 
-          {/* CAMERA */}
-          <div className="absolute inset-0 z-30 overflow-hidden rounded-[2.7rem] bg-[#f3dfc7]">
-            <div className="absolute left-0 top-0 h-24 w-full rounded-b-[2.2rem] bg-[#f8ead9]" />
+            <div className="relative flex flex-col items-center">
+              <div className="relative z-20 h-[250px] w-[360px] border border-[#d8c7c2] bg-[#efe1dc]">
+                <div className="absolute left-8 top-8 h-8 w-8 rounded-full border border-[#8b6f68]" />
 
-            {/* SLIT */}
-            <div className="absolute left-1/2 top-[18px] z-50 h-3 w-48 -translate-x-1/2 rounded-full bg-[#c7a98c]">
-              <div className="absolute left-1/2 top-1/2 h-1 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#8d6f5f]" />
-            </div>
+                <div className="absolute right-8 top-8 h-8 w-14 border border-[#8b6f68] bg-[#f6ebe7]" />
 
-            {/* VIEWFINDER */}
-            <div className="absolute left-8 top-28 z-50 h-12 w-16 rounded-2xl bg-[#fffaf3]">
-              <div className="absolute inset-3 rounded-xl bg-[#8d6f5f]" />
-            </div>
-
-            {/* FLASH PIECE */}
-            <div className="absolute right-9 top-28 z-50 h-14 w-14 rounded-2xl bg-[#fffaf3]">
-              <div className="absolute inset-3 rounded-xl bg-[#ead8c5]" />
-              <div className="flash-dot absolute -right-1 -top-1 h-5 w-5 rounded-full bg-white" />
-            </div>
-
-            {/* BUTTONS */}
-            <div className="absolute right-11 top-40 z-50 h-9 w-9 rounded-full bg-[#d8c4a8]" />
-            <div className="absolute left-16 top-42 z-50 h-6 w-6 rounded-full bg-[#d8c4a8]" />
-
-            {/* LENS */}
-            <div className="absolute left-1/2 top-[160px] z-50 flex h-36 w-36 -translate-x-1/2 items-center justify-center rounded-full bg-[#e4cbb1] sm:top-[175px] sm:h-40 sm:w-40">
-              <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[#6f574b] sm:h-32 sm:w-32">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#2f251f] sm:h-24 sm:w-24">
-                  <div className="h-8 w-8 rounded-full bg-[#4a3930]" />
+                <div className="absolute left-1/2 top-[85px] h-24 w-24 -translate-x-1/2 rounded-full border border-[#8b6f68] bg-[#f6ebe7]">
+                  <div className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#8b6f68] bg-[#241818]" />
                 </div>
+
+                <div className="absolute bottom-8 left-1/2 h-3 w-52 -translate-x-1/2 border border-[#8b6f68] bg-[#241818]" />
+              </div>
+
+              <div
+                className={`absolute top-[220px] z-10 w-[210px] border border-[#d8c7c2] bg-[#f8eee9] p-3 transition-all duration-[2500ms] ease-out ${
+                  dispense
+                    ? "translate-y-[190px] opacity-100"
+                    : "translate-y-0 opacity-0"
+                }`}
+              >
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#241818]">
+                  <img
+                    src={photos[activePhoto]}
+                    alt="archive memory"
+                    className={`h-full w-full object-cover transition-opacity duration-[2500ms] ${
+                      develop ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+
+                  <div
+                    className={`absolute inset-0 bg-[#241818] transition-opacity duration-[2500ms] ${
+                      develop ? "opacity-0" : "opacity-100"
+                    }`}
+                  />
+                </div>
+
+                <div className="h-10" />
               </div>
             </div>
-
-            {/* BOTTOM DETAIL */}
-            <div className="absolute bottom-8 left-1/2 z-50 h-10 w-28 -translate-x-1/2 rounded-full bg-[#d8c4a8]" />
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .flash-burst {
-          opacity: 0;
-          pointer-events: none;
-
-          background: radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.95) 0%,
-            rgba(255, 255, 255, 0.6) 35%,
-            rgba(255, 255, 255, 0) 75%
-          );
-
-          filter: blur(18px);
-          animation: flashBurst 1s ease-out forwards;
-          animation-delay: 1s;
-        }
-
-        .flash-dot {
-          animation: flashDot 1s ease-out forwards;
-          animation-delay: 1s;
-        }
-
-        .instax-photo {
-          opacity: 0;
-          transform: translateX(-50%) translateY(95px);
-
-          animation: slideUpFromSlit 5.5s
-            cubic-bezier(0.22, 1, 0.36, 1)
-            forwards;
-
-          animation-delay: 1.2s;
-        }
-
-        .photo-develop {
-          background-image: url("https://i.postimg.cc/vBsk0591/IMG-7314.jpg");
-          background-size: cover;
-          background-position: center;
-          filter: brightness(0);
-
-          animation: developPhoto 2.5s ease-in-out forwards;
-
-          /* starts shortly before the photo fully finishes dispensing */
-          animation-delay: 3.5s;
-        }
-
-        @keyframes flashBurst {
-          0% {
-            opacity: 0;
-            transform: scale(0.3);
-          }
-
-          18% {
-            opacity: 1;
-            transform: scale(2.4);
-          }
-
-          40% {
-            opacity: 0.45;
-            transform: scale(3.1);
-          }
-
-          100% {
-            opacity: 0;
-            transform: scale(3.6);
-          }
-        }
-
-        @keyframes flashDot {
-          0% {
-            opacity: 0.45;
-            transform: scale(1);
-            box-shadow: none;
-          }
-
-          18% {
-            opacity: 1;
-            transform: scale(1.7);
-            box-shadow:
-              0 0 35px 18px rgba(255, 255, 255, 0.95),
-              0 0 90px 45px rgba(255, 255, 255, 0.45);
-          }
-
-          100% {
-            opacity: 0.45;
-            transform: scale(1);
-            box-shadow: none;
-          }
-        }
-
-        @keyframes slideUpFromSlit {
-          0% {
-            opacity: 0;
-            transform: translateX(-50%) translateY(95px);
-          }
-
-          8% {
-            opacity: 1;
-            transform: translateX(-50%) translateY(95px);
-          }
-
-          100% {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-180px);
-          }
-        }
-
-        @keyframes developPhoto {
-          0%,
-          32% {
-            filter: brightness(0);
-          }
-
-          52% {
-            filter: brightness(0.35) saturate(0.4);
-          }
-
-          76%,
-          100% {
-            filter: brightness(1) saturate(1);
-          }
-        }
-      `}</style>
-    </>
+    </section>
   )
 }
