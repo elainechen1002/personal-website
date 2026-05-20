@@ -9,7 +9,7 @@ const projects = [
       "A youth-led marine conservation project creating simple rescue kits to help local fishermen reduce animal entanglement.",
   },
   {
-    date: "2024",
+    date: "2025",
     title: "UofT CREATE Engineering Program",
     role: "AI + Engineering",
     image:
