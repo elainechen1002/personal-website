@@ -8,7 +8,6 @@ const photos = [
   "https://i.postimg.cc/Y0F7XmXW/IMG-6981.jpg",
   "https://i.postimg.cc/m2TppHp3/IMG-6978.jpg",
   "https://i.postimg.cc/XqLL6s1s/IMG-6980.jpg",
-  "https://i.postimg.cc/CLv7v6qB/IMG-6979.jpg",
 ]
 
 export function About() {
