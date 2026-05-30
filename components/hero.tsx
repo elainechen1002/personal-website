@@ -34,7 +34,7 @@ export function Hero() {
 
     async function animateChars() {
       // Slightly faster start
-      await new Promise((resolve) => setTimeout(resolve, 300))
+      await new Promise((resolve) => setTimeout(resolve, 400))
 
       for (let i = 0; i < chars.length; i++) {
         const el = charRefs.current[i]
@@ -52,8 +52,8 @@ export function Hero() {
           radicalColor: "#3b2626",
 
           // Slightly faster than original
-          delayBetweenStrokes: 40,
-          strokeAnimationSpeed: 3.5,
+          delayBetweenStrokes: 50,
+          strokeAnimationSpeed: 3,
         })
 
         await writer.animateCharacter()
@@ -62,7 +62,7 @@ export function Hero() {
       setShowMajor(true)
 
       // Show button sooner
-      setTimeout(() => setShowButton(true), 600)
+      setTimeout(() => setShowButton(true), 750)
     }
 
     animateChars()
